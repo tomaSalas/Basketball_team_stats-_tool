@@ -1,3 +1,5 @@
+
+  
 import constants
 import copy
 import sys
@@ -10,36 +12,34 @@ my_players = copy.deepcopy(constants.PLAYERS)
 
 my_teams = copy.deepcopy(constants.TEAMS)
 
+team2_players = number_of_player_per_team + number_of_player_per_team
 
-
-def cleaning_data_from_PLAYERS_height(players):
+def cleaning_data_from_PLAYERS_heights(players):
     for player in players:
         for key, value in player.items():
             if key == "height":
                 new_value = value.split()
-                # https://www.geeksforgeeks.org/python-convert-numeric-string-to-integers-in-mixed-list/
-                new_value_to_dic = [int(string) if string.isdigit() else string for string in new_value]
-                return new_value_to_dic
+                new_value[0] = int(new_value[0])
+                player["height"] = new_value
+               
             
             
-def cleaning_data_from_PLAYERS_experience(players):
+def cleaning_data_from_PLAYERS_experiences(players):
     for player in players:
         for key, value in player.items():
             if key == "experience":
                 if value == "YES":
-                    return True
+                    player["experience"] = True
                 else:
-                    return False
-                
-         
-def new_data_for_dic_height(value):
-    for player in my_players:
-        player["height"] = value
-        
-        
-def new_data_for_dic_experience(value):
-    for player in my_players:
-        player["experience"] = value
+                    player["experience"] = False
+                    
+                    
+def cleaning_data_from_PLAYERS_guardians(players):
+    for player in players:
+        for key, value in player.items():
+            if key == "guardians":
+                new_value = value.split(" ")
+                player["guardians"] = new_value
 
         
 def a_team():
@@ -48,15 +48,27 @@ def a_team():
 
 def balance_teams(team1, team2, team3):
     index = 1
+    exp_p = 1
     for player in my_players:
-        if index <= number_of_player_per_team:
-                team1.append(player)
-                index += 1
-        elif (index > number_of_player_per_team) and (index <= (number_of_player_per_team + number_of_player_per_team)):
-                team2.append(player)
-                index += 1
-        else:
-            team3.append(player)
+        for key, value in player.items():
+            if (index <= number_of_player_per_team):
+                if (value == True and (exp_p >= 0 and exp_p <= 3)):
+                    team1.append(player)
+                    index += 1
+                    exp_p += 1
+                else:
+                    team1.append(player)
+                    index += 1
+            elif (index > number_of_player_per_team and index <= team2_players):
+                if (value == True and (exp_p >= 3 and exp_p <= 6)):
+                    team2.append(player)
+                    index += 1
+                    exp_p += 1
+                else:
+                    team2.append(player)
+                    index += 1
+            else:
+                team3.append(player)
          
         
 def intro():
@@ -117,7 +129,14 @@ def display_team(team):
     display_stats(team)
 
 def display_stats(team):
+    new_list = list()
+    print(("-" * 10) + "Overview" + ("-" * 10))
     print("Total players:  " + "\033[1m" + str(len(team)) + "\033[0m")
+    for tea in team:
+        for key, value in tea.items():
+            if key == "name":
+                new_list.append(value)
+    print(", ".join(new_list) + "\n")
     
 
 if __name__ == "__main__":
@@ -131,13 +150,14 @@ if __name__ == "__main__":
             help_promp()
             continue
         elif control == "1":
-            new_data_for_dic_height(cleaning_data_from_PLAYERS_height(my_players))
-            new_data_for_dic_experience(cleaning_data_from_PLAYERS_experience(my_players))
+            cleaning_data_from_PLAYERS_heights(my_players)
+            cleaning_data_from_PLAYERS_experiences(my_players)
             team1 = a_team()
             team2 = a_team()
             team3 = a_team()
             balance_teams(team1,team2, team3)
             display_team(team_selection())
+            continue
             
             #funcdysplay team stats
             break
@@ -150,9 +170,4 @@ if __name__ == "__main__":
     
 
    
-    
-   
-    
-
-    
 
