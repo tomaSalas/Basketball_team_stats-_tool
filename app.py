@@ -48,27 +48,27 @@ def a_team():
 
 def balance_teams(team1, team2, team3):
     index = 1
-    exp_p = 1
+    count = 1
     for player in my_players:
-        for key, value in player.items():
-            if (index <= number_of_player_per_team):
-                if (value == True and (exp_p >= 0 and exp_p <= 3)):
-                    team1.append(player)
-                    index += 1
-                    exp_p += 1
-                else:
-                    team1.append(player)
-                    index += 1
-            elif (index > number_of_player_per_team and index <= team2_players):
-                if (value == True and (exp_p >= 3 and exp_p <= 6)):
-                    team2.append(player)
-                    index += 1
-                    exp_p += 1
-                else:
-                    team2.append(player)
-                    index += 1
-            else:
-                team3.append(player)
+        if (index <= number_of_player_per_team and player["experience"] == True and count <= 3):
+            team1.append(player)
+            index += 1
+            count += 1
+        elif (index <= number_of_player_per_team and player["experience"] == False and count > 3):
+            team1.append(player)
+            index += 1
+            count += 1
+        elif ((index > number_of_player_per_team and index <= team2_players) and player["experience"] == True and count <= 9):
+            team2.append(player)
+            index += 1
+            count += 1
+        elif ((index > number_of_player_per_team and index <= team2_players) and player["experience"] == False and count > 9):
+            team2.append(player)
+            index += 1
+            count += 1
+        else:
+            team3.append(player)
+            
          
         
 def intro():
@@ -83,7 +83,6 @@ def help_promp():
              """)
         
     
-
 def team_selection():
     print("""
 1)  Panthers
