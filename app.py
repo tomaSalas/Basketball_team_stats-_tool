@@ -110,11 +110,11 @@ def team_selection():
     
 def display_team(team):
     if team == team1:
-        print(("-" * 10) + "Panthers Players" + ("-" * 10))
+        print( "\n" + ("-" * 10) + " Panthers Players " + ("-" * 10))
     elif team == team2:
-        print(("-" * 10) + "Bandits Players" + ("-" * 10))
+        print("\n" + ("-" * 10) + " Bandits Players " + ("-" * 10))
     else:
-        print(("-" * 10) + "Warrius Players" + ("-" * 10))
+        print("\n" + ("-" * 10) + " Warrius Players " + ("-" * 10))
     for players in team:
         for key, value in players.items():
             if key == "name":
@@ -142,12 +142,13 @@ def display_stats(team):
     count_non_exp = 0
     add_height = 0
     new_list = list()
-    print(("-" * 10) + "Overview" + ("-" * 10))
-    print("Total players:  " + "\033[1m" + str(len(team)) + "\033[0m")
+    new_list2 = list()
     for tea in team:
         for key, value in tea.items():
             if key == "name":
                 new_list.append(value)
+            elif key == "guardians":
+                new_list2.append(", ".join(value))
             elif key == "experience" and value == True:
                 count_exp += 1
             elif key == "experience" and value == False:
@@ -155,7 +156,12 @@ def display_stats(team):
             elif key == "height":
                 add_height += value
                 count += 1
+    print(("-" * 10) + "Overview" + ("-" * 10))
+    print("players:")
     print(", ".join(new_list) + "\n")
+    print("Guardians:")
+    print(", ".join(new_list2) + "\n")
+    print("Total players:  " + "\033[1m" + str(len(team)) + "\033[0m")
     print("Total experienced: " + "\033[1m" + str(count_exp) + "\033[0m")
     print("Total inexperienced: "  + "\033[1m" + str(count_non_exp) + "\033[0m")
     print("Average height: " + "\033[1m" + " {:.2f} ".format(add_height/count) +"\033[0m")
