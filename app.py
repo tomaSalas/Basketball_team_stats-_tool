@@ -1,5 +1,3 @@
-
-  
 import constants
 import copy
 import sys
@@ -74,8 +72,12 @@ def balance_teams(team1, team2, team3):
             team3.append(player)
             
 def intro():
+    print("Made by Tomas!")
     print("BASKETT BALL TEAM STAT TOOL 🏀 \n" )
     print(("-" * 12) + " MENU " + ("-" * 12) + "\n")
+    
+def bye():
+    print("Goodbye! 🥺")
     
     
 def help_promp():
@@ -86,6 +88,8 @@ def help_promp():
         
     
 def team_selection():
+    print(("-" * 12) + " TEAMS " + ("-" * 12))
+    
     print("""
 1)  Panthers
 2)  Bandits
@@ -163,9 +167,10 @@ def display_stats(team):
             display_team(team_selection())
             break
         elif asnwer.upper() == "N":
+            bye()
             sys.exit()
         else:
-            print("That is not a valid input! Please try again")
+            print("That is not a valid input! Please try again. EX. \'y\' or \'n\'")
             continue
 
 if __name__ == "__main__":
@@ -187,14 +192,8 @@ if __name__ == "__main__":
             balance_teams(team1,team2, team3)
             value = display_team(team_selection())
         elif control == "2":
+            bye()
             sys.exit()
         else:
             print("\n"+ "That is not a valid input! Please try again" + "\n" + "You can always type \'HELP\' if you do not remenber the commands")
             continue
-            
-
-        
-    
-    
-
-   
